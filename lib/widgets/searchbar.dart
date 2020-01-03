@@ -57,11 +57,13 @@ class _UserStatusState extends State<UserStatus> {
   void changeStatus(String s) {
     _status = s;
   }
-  
 
   @override
   Widget build(BuildContext context) {
     // changeStatus(widget.status);
+    if(_status == null) {
+      _status = widget.status;
+    }
     return !_editing
         ? InkWell(
             onTap: () {
