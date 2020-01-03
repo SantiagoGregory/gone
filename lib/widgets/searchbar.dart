@@ -33,10 +33,11 @@ class UserStatus extends StatefulWidget {
   const UserStatus(this.status);
   final String status;
   @override
-  _UserStatusState createState() => _UserStatusState();
+  _UserStatusState createState() => _UserStatusState(status);
 }
 
 class _UserStatusState extends State<UserStatus> {
+  _UserStatusState(String _status);
   bool _editing = false;
   String _status;
 
@@ -46,28 +47,28 @@ class _UserStatusState extends State<UserStatus> {
   final borderGrey = OutlineInputBorder(
       borderSide: BorderSide(color: Colors.grey, width: 1.5));
 
+  final focus = FocusNode();
+
+  // void changeStatus(String s) {
+  //   setState(() {
+  //     _status = s;
+  //   });
+  // }
   void changeStatus(String s) {
-    setState(() {
-      _status = s;
-    });
+    _status = s;
   }
+  
 
   @override
   Widget build(BuildContext context) {
-    this.setState(() {
-      _status = widget.status;
-    });
-    print("a");
-    print(_status);
-    print("b");
-    print(widget.status);
-    print("c");
+    // changeStatus(widget.status);
     return !_editing
         ? InkWell(
             onTap: () {
               this.setState(() {
                 _editing = true;
               });
+              FocusScope.of(context).requestFocus(focus);
             },
             child: Row(
               children: <Widget>[
@@ -85,33 +86,43 @@ class _UserStatusState extends State<UserStatus> {
                 ),
               ],
             ))
-        : TextField(
-            autofocus: true,
-            onEditingComplete: () {
-              this.setState(() {
-                _editing = false;
-              });
+        : InkWell(
+            onFocusChange: (bool b) {
+              if (!b && _editing) {
+                print(_status);
+                this.setState(() {
+                  _editing = false;
+                });
+              }
             },
-            onSubmitted: (String value) {
-              Firestore.instance
-                  .collection("users")
-                  .document(Constants.DUMMY_UID)
-                  .updateData({'status': value});
+            child: TextField(
+              focusNode: focus, // TODO auto open keyboard
+              // autofocus: true,
+              onEditingComplete: () {
+                this.setState(() {
+                  _editing = false;
+                });
+              },
+              onSubmitted: (String value) {
+                print('submitted');
+                Firestore.instance
+                    .collection("users")
+                    .document(Constants.DUMMY_UID)
+                    .updateData({'status': value});
 
-              this.setState(() {
-                _editing = false;
-              });
-              changeStatus(value);
-
-              print(_status);
-            },
-            decoration: InputDecoration(
-                enabledBorder: border,
-                border: borderGrey,
-                labelText: _status,
-                labelStyle: TextStyle(color: Colors.grey)),
-            style: TextStyle(color: Colors.white),
-          );
+                this.setState(() {
+                  _editing = false;
+                });
+                changeStatus(value);
+                print(_status);
+              },
+              decoration: InputDecoration(
+                  enabledBorder: border,
+                  border: borderGrey,
+                  labelText: _status,
+                  labelStyle: TextStyle(color: Colors.grey)),
+              style: TextStyle(color: Colors.white),
+            ));
   }
 }
 

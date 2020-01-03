@@ -34,7 +34,7 @@ class StatusList extends StatelessWidget {
               dynamic currentDocument = snapshot.data.documents[index];
               if (friendids.contains(currentDocument.documentID))
                 return Status(currentDocument.data["name"],
-                    currentDocument.data["status"]);
+                    currentDocument.data["status"], currentDocument.documentID);
             },
             separatorBuilder: (context, index) {
               return Divider(color: Colors.white);
@@ -45,17 +45,18 @@ class StatusList extends StatelessWidget {
 }
 
 class Status extends StatefulWidget {
-  const Status(this.name, this.status, {Key key}) : super(key: key);
+  const Status(this.name, this.status, this.uid, {Key key}) : super(key: key);
 
   final String name;
   final String status;
+  final String uid;
   @override
   _StatusState createState() => _StatusState(status);
 }
 
 class _StatusState extends State<Status> {
   _StatusState(this._status);
-  String _status;
+  String _status; // TODO final?
   // TODO add dismissable
   bool _favorite = false;
 
@@ -63,22 +64,29 @@ class _StatusState extends State<Status> {
   Widget build(BuildContext context) {
     return Card(
         child: ListTile(
-          leading: FlutterLogo(size: 50),
-          title: Text(widget.name,
-              style: TextStyle(color: Colors.white, fontSize: 25)),
-          subtitle: Text(widget.status, style: TextStyle(color: Colors.grey)),
-          trailing: IconButton(
-            icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
-            iconSize: 30,
-            color: Colors.white,
-            splashColor: Colors.black,
-            onPressed: () {
-              setState(() {
-                _favorite = !_favorite;
-              });
-            },
-          ),
-        ),
+            leading: FlutterLogo(size: 30),
+            title: Text(widget.name, style: TextStyle(color: Colors.white, fontSize: 25)),
+            // title: RichText(
+            //     text: TextSpan(
+            //         text: widget.name,
+            //         style: TextStyle(color: Colors.white, fontSize: 25),
+            //         children: <TextSpan>[
+            //       TextSpan(
+            //           text: widget.status,
+            //           style: TextStyle(color: Colors.grey, fontSize: 25)),
+            //     ])),
+            subtitle: Text(widget.uid, style: TextStyle(color: Colors.grey)),
+            trailing: IconButton(
+              icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
+              iconSize: 30,
+              color: Colors.white,
+              splashColor: Colors.black,
+              onPressed: () {
+                setState(() {
+                  _favorite = !_favorite;
+                });
+              },
+            )),
         color: Colors.black);
   }
 }
