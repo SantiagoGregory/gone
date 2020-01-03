@@ -38,6 +38,7 @@ class UserStatus extends StatefulWidget {
 
 class _UserStatusState extends State<UserStatus> {
   bool _editing = false;
+  String _status;
 
   final border = OutlineInputBorder(
       borderSide:
@@ -45,9 +46,22 @@ class _UserStatusState extends State<UserStatus> {
   final borderGrey = OutlineInputBorder(
       borderSide: BorderSide(color: Colors.grey, width: 1.5));
 
+  void changeStatus(String s) {
+    setState(() {
+      _status = s;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    String _status = widget.status;
+    this.setState(() {
+      _status = widget.status;
+    });
+    print("a");
+    print(_status);
+    print("b");
+    print(widget.status);
+    print("c");
     return !_editing
         ? InkWell(
             onTap: () {
@@ -72,6 +86,7 @@ class _UserStatusState extends State<UserStatus> {
               ],
             ))
         : TextField(
+            autofocus: true,
             onEditingComplete: () {
               this.setState(() {
                 _editing = false;
@@ -82,7 +97,13 @@ class _UserStatusState extends State<UserStatus> {
                   .collection("users")
                   .document(Constants.DUMMY_UID)
                   .updateData({'status': value});
-              _status = value;
+
+              this.setState(() {
+                _editing = false;
+              });
+              changeStatus(value);
+
+              print(_status);
             },
             decoration: InputDecoration(
                 enabledBorder: border,

@@ -50,10 +50,12 @@ class Status extends StatefulWidget {
   final String name;
   final String status;
   @override
-  _StatusState createState() => _StatusState();
+  _StatusState createState() => _StatusState(status);
 }
 
 class _StatusState extends State<Status> {
+  _StatusState(this._status);
+  String _status;
   // TODO add dismissable
   bool _favorite = false;
 
