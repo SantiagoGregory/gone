@@ -17,22 +17,24 @@ List<String> getSuggestions(pattern, list) {
 class StatusList extends StatelessWidget {
   StatusList(this.friendids);
 
-  final List<dynamic> friendids;
+  final List<String> friendids;
 
   @override
   Widget build(BuildContext context) {
-    print('over here');
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('users').snapshots(),
         builder: (context, snapshot) {
           if(!snapshot.hasData) {
             return Text("Loading . . . ", style: TextStyle(color: Colors.white));
           }
-          ListView.separated(
+          return ListView.separated(
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index) {
-              dynamic currentDocument = snapshot.data.documents[index].data;
-              return Status(currentDocument["name"], currentDocument["status"]);
+              
+              dynamic currentDocument = snapshot.data.documents[index];
+              if(friendids.contains(currentDocument.documentID))
+                return Status(currentDocument.data["name"], currentDocument.data["status"]);
+            
             },
             separatorBuilder: (context, index) {
               return Divider(color: Colors.white);

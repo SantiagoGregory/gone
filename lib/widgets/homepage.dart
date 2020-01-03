@@ -27,8 +27,6 @@ class _HomePageState extends State<HomePage> {
           if (!snapshot.hasData) {
             return LoadingPage();
           }
-          print(snapshot.data["friends"].runtimeType);
-          print(snapshot.data["friends"]);
           return Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(
@@ -38,7 +36,7 @@ class _HomePageState extends State<HomePage> {
             ),
             // body: Text('placeholder', style: TextStyle(color: Colors.white)),
 
-            body: StatusList(snapshot.data["friends"]),
+            body: StatusList(new List<String>.from(snapshot.data["friends"])),
             backgroundColor: Constants.BG_COLOR,
           );
         });
