@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -28,21 +29,68 @@ class Suggestion extends StatelessWidget {
   }
 }
 
-class UserStatus extends StatelessWidget {
+class UserStatus extends StatefulWidget {
   const UserStatus(this.status);
   final String status;
+  @override
+  _UserStatusState createState() => _UserStatusState();
+}
+
+class _UserStatusState extends State<UserStatus> {
+  bool _editing = false;
+
+  final border = OutlineInputBorder(
+      borderSide:
+          BorderSide(color: Colors.white, width: 1.5)); // TODO globalize
+  final borderGrey = OutlineInputBorder(
+      borderSide: BorderSide(color: Colors.grey, width: 1.5));
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-        style: TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-            disabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.white, width: 1.0, style: BorderStyle.none)),
-            suffixIcon: Icon(Icons.edit),
-            hintText: status,
-            labelText: "Status"));
+    String _status = widget.status;
+    return !_editing
+        ? InkWell(
+            onTap: () {
+              this.setState(() {
+                _editing = true;
+              });
+            },
+            child: Row(
+              children: <Widget>[
+                Text(_status,
+                    style: TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40)), // TODO make relative
+                SizedBox(
+                  width: 25,
+                ), // TODO make relative
+                Icon(
+                  Icons.edit,
+                  color: Colors.grey,
+                ),
+              ],
+            ))
+        : TextField(
+            onEditingComplete: () {
+              this.setState(() {
+                _editing = false;
+              });
+            },
+            onSubmitted: (String value) {
+              Firestore.instance
+                  .collection("users")
+                  .document(Constants.DUMMY_UID)
+                  .updateData({'status': value});
+              _status = value;
+            },
+            decoration: InputDecoration(
+                enabledBorder: border,
+                border: borderGrey,
+                labelText: _status,
+                labelStyle: TextStyle(color: Colors.grey)),
+            style: TextStyle(color: Colors.white),
+          );
   }
 }
 
@@ -72,7 +120,8 @@ class SearchBar extends StatelessWidget {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 50)),
-        UserStatus(status), // TODO padding
+        FractionallySizedBox(
+            widthFactor: .95, child: UserStatus(status)), // TODO globalize .95
         Flexible(
           child: FractionallySizedBox(
             heightFactor: .2,

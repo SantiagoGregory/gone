@@ -30,12 +30,10 @@ class _HomePageState extends State<HomePage> {
           return Scaffold(
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(
-                  300), // TODO add relative height wait maybe it is
+                  250), // TODO add relative height wait maybe it is
               child: SearchBar(snapshot.data['name'],
                   snapshot.data['status']), // TODO snapshot
             ),
-            // body: Text('placeholder', style: TextStyle(color: Colors.white)),
-
             body: StatusList(new List<String>.from(snapshot.data["friends"])),
             backgroundColor: Constants.BG_COLOR,
           );

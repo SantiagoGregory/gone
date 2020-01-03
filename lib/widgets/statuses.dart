@@ -24,17 +24,17 @@ class StatusList extends StatelessWidget {
     return StreamBuilder<QuerySnapshot>(
         stream: Firestore.instance.collection('users').snapshots(),
         builder: (context, snapshot) {
-          if(!snapshot.hasData) {
-            return Text("Loading . . . ", style: TextStyle(color: Colors.white));
+          if (!snapshot.hasData) {
+            return Text("Loading . . . ",
+                style: TextStyle(color: Colors.white));
           }
           return ListView.separated(
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index) {
-              
               dynamic currentDocument = snapshot.data.documents[index];
-              if(friendids.contains(currentDocument.documentID))
-                return Status(currentDocument.data["name"], currentDocument.data["status"]);
-            
+              if (friendids.contains(currentDocument.documentID))
+                return Status(currentDocument.data["name"],
+                    currentDocument.data["status"]);
             },
             separatorBuilder: (context, index) {
               return Divider(color: Colors.white);
@@ -64,8 +64,7 @@ class _StatusState extends State<Status> {
           leading: FlutterLogo(size: 50),
           title: Text(widget.name,
               style: TextStyle(color: Colors.white, fontSize: 25)),
-          subtitle: Text(widget.status,
-              style: TextStyle(color: Colors.grey)),
+          subtitle: Text(widget.status, style: TextStyle(color: Colors.grey)),
           trailing: IconButton(
             icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
             iconSize: 30,
