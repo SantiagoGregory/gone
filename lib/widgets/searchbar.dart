@@ -6,7 +6,7 @@ import 'package:gone/widgets/statuses.dart';
 import 'constants.dart' as Constants;
 
 class Suggestion extends StatelessWidget {
-  const Suggestion(this.name, {this.textOnly});
+  const Suggestion(this.name, this.textOnly);
 
   final String name;
   final bool textOnly;
@@ -61,7 +61,7 @@ class _UserStatusState extends State<UserStatus> {
   @override
   Widget build(BuildContext context) {
     // changeStatus(widget.status);
-    if(_status == null) {
+    if (_status == null) {
       _status = widget.status;
     }
     return !_editing
@@ -129,10 +129,11 @@ class _UserStatusState extends State<UserStatus> {
 }
 
 class SearchBar extends StatelessWidget {
-  const SearchBar(this.name, this.status);
+  const SearchBar(this.name, this.status, this.users);
 
   final String name;
   final String status;
+  final List<dynamic> users;
 
   @override
   Widget build(BuildContext context) {
@@ -207,17 +208,27 @@ class SearchBar extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.white)),
             ),
             suggestionsCallback: (pattern) {
-              // return getSuggestions(pattern, friends);
+              // dynamic test = Firestore.instance.collection('users').snapshots();
+              // List<dynamic> uList;
+              // for(String s in users) {
+              //   print(s);
+              //   uList.add(s);
+              // }
+              // return getSuggestions(pattern, List.from(users));
+              return getSuggestions(pattern, users);
             },
             itemBuilder: (context, suggestion) {
+              print('ASDFASDFSADF');
+              print(suggestion.runtimeType);
               return Container(
-                  color: Colors.black, child: Suggestion(suggestion));
+                  color: Colors.black, child: Suggestion(suggestion, false));
             },
             onSuggestionSelected: (suggestion) {
               print(suggestion);
             },
             noItemsFoundBuilder: (BuildContext context) => Container(
-                color: Colors.black, child: Suggestion('No friends found!')),
+                color: Colors.black,
+                child: Suggestion('No friends found!', true)),
           ),
         ),
 

@@ -7,7 +7,8 @@ import 'constants.dart' as Constants;
 List<String> getSuggestions(pattern, list) {
   List<String> suggestions = [];
   for (final s in list) {
-    if (s.startsWith(pattern) && pattern != '') {
+    print('HERE $s');
+    if (s != null && s.startsWith(pattern) && pattern != '') {
       suggestions.add(s);
     }
   }
@@ -32,9 +33,9 @@ class StatusList extends StatelessWidget {
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index) {
               dynamic currentDocument = snapshot.data.documents[index];
-              if (friendids.contains(currentDocument.documentID))
-                return Status(currentDocument.data["name"],
-                    currentDocument.data["status"], currentDocument.documentID);
+              // if (friendids.contains(currentDocument.documentID))
+              return Status(currentDocument.data["name"],
+                  currentDocument.data["status"], currentDocument.documentID);
             },
             separatorBuilder: (context, index) {
               return Divider(color: Colors.white);
@@ -65,7 +66,8 @@ class _StatusState extends State<Status> {
     return Card(
         child: ListTile(
             leading: FlutterLogo(size: 30),
-            title: Text(widget.name, style: TextStyle(color: Colors.white, fontSize: 25)),
+            title: Text(widget.name,
+                style: TextStyle(color: Colors.white, fontSize: 25)),
             // title: RichText(
             //     text: TextSpan(
             //         text: widget.name,

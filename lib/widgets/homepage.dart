@@ -31,8 +31,11 @@ class _HomePageState extends State<HomePage> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(
                   250), // TODO add relative height wait maybe it is
-              child: SearchBar(snapshot.data['name'],
-                  snapshot.data['status']), // TODO snapshot
+              child: SearchBar(
+                  snapshot.data['name'],
+                  snapshot.data['status'],
+                  new List<String>.from(
+                      snapshot.data["friends"])), // TODO snapshot
             ),
             body: StatusList(new List<String>.from(snapshot.data["friends"])),
             backgroundColor: Constants.BG_COLOR,
