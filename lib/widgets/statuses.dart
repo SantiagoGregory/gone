@@ -1,9 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'constants.dart' as Constants;
-import 'fetch.dart';
-
 
 List<String> getSuggestions(pattern, list) {
   List<String> suggestions = [];
@@ -16,35 +15,38 @@ List<String> getSuggestions(pattern, list) {
 }
 
 class StatusList extends StatelessWidget {
-  StatusList(this.friends);
+  StatusList(this.friendids);
 
-  final List<Map> friends;
+  final List<dynamic> friendids;
 
   @override
   Widget build(BuildContext context) {
     print('over here');
-    return ListView.separated(
-      itemCount: friends.length,
-      itemBuilder: (context, index) {
-        return Status(friends[index]);
-      },
-      separatorBuilder: (context, index) {
-        return Divider(color: Colors.white);
-      },
-    );
-    // return FloatingSearchBar.builder(
-    //   itemCount: friends.length,
-    //   itemBuilder: (context, i) {
-    //     return Status(friends[i]);
-    //   },
-    // );
+    return StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('users').snapshots(),
+        builder: (context, snapshot) {
+          if(!snapshot.hasData) {
+            return Text("Loading . . . ", style: TextStyle(color: Colors.white));
+          }
+          ListView.separated(
+            itemCount: snapshot.data.documents.length,
+            itemBuilder: (context, index) {
+              dynamic currentDocument = snapshot.data.documents[index].data;
+              return Status(currentDocument["name"], currentDocument["status"]);
+            },
+            separatorBuilder: (context, index) {
+              return Divider(color: Colors.white);
+            },
+          );
+        });
   }
 }
 
 class Status extends StatefulWidget {
-  const Status(this.data, {Key key}) : super(key: key);
+  const Status(this.name, this.status, {Key key}) : super(key: key);
 
-  final Map data;
+  final String name;
+  final String status;
   @override
   _StatusState createState() => _StatusState();
 }
@@ -58,9 +60,10 @@ class _StatusState extends State<Status> {
     return Card(
         child: ListTile(
           leading: FlutterLogo(size: 50),
-          title: Text(widget.data.keys.first,
+          title: Text(widget.name,
               style: TextStyle(color: Colors.white, fontSize: 25)),
-          subtitle: Text(widget.data.values.first, style: TextStyle(color: Colors.grey)),
+          subtitle: Text(widget.status,
+              style: TextStyle(color: Colors.grey)),
           trailing: IconButton(
             icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
             iconSize: 30,
@@ -76,4 +79,3 @@ class _StatusState extends State<Status> {
         color: Colors.black);
   }
 }
-

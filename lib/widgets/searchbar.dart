@@ -28,11 +28,29 @@ class Suggestion extends StatelessWidget {
   }
 }
 
-class SearchBar extends StatelessWidget {
-  const SearchBar(this.data, this.friends);
+class UserStatus extends StatelessWidget {
+  const UserStatus(this.status);
+  final String status;
 
-  final Map data;
-  final List friends;
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+        style: TextStyle(color: Colors.white),
+        decoration: InputDecoration(
+            disabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: Colors.white, width: 1.0, style: BorderStyle.none)),
+            suffixIcon: Icon(Icons.edit),
+            hintText: status,
+            labelText: "Status"));
+  }
+}
+
+class SearchBar extends StatelessWidget {
+  const SearchBar(this.name, this.status);
+
+  final String name;
+  final String status;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +58,6 @@ class SearchBar extends StatelessWidget {
         borderSide: BorderSide(color: Colors.white, width: 1.5));
     final borderGrey = OutlineInputBorder(
         borderSide: BorderSide(color: Colors.grey, width: 1.5));
-    final String name = data['name'];
-
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -56,37 +72,38 @@ class SearchBar extends StatelessWidget {
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 50)),
+        UserStatus(status), // TODO padding
         Flexible(
           child: FractionallySizedBox(
             heightFactor: .2,
           ),
         ),
-        FractionallySizedBox(
-          widthFactor: .8,
-          child: TypeAheadField(
-            textFieldConfiguration: TextFieldConfiguration(
-              autofocus: true,
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                  enabledBorder: border,
-                  border: borderGrey,
-                  labelText: 'Set a status',
-                  labelStyle: TextStyle(color: Colors.white)),
-            ),
-            suggestionsCallback: (pattern) {
-              return null;
-            },
-            itemBuilder: (context, suggestion) {
-              return Container(
-                  color: Colors.black, child: Suggestion(suggestion));
-            },
-            onSuggestionSelected: (suggestion) {
-              print(suggestion);
-            },
-            noItemsFoundBuilder: (BuildContext context) => Container(
-                color: Colors.black, child: Suggestion('No friends found!')),
-          ),
-        ),
+        // FractionallySizedBox(
+        //   widthFactor: .8,
+        //   child: TypeAheadField(
+        //     textFieldConfiguration: TextFieldConfiguration(
+        //       autofocus: true,
+        //       style: TextStyle(color: Colors.white),
+        //       decoration: InputDecoration(
+        //           enabledBorder: border,
+        //           border: borderGrey,
+        //           labelText: 'Set a status',
+        //           labelStyle: TextStyle(color: Colors.white)),
+        //     ),
+        //     suggestionsCallback: (pattern) {
+        //       return null;
+        //     },
+        //     itemBuilder: (context, suggestion) {
+        //       return Container(
+        //           color: Colors.black, child: Suggestion(suggestion));
+        //     },
+        //     onSuggestionSelected: (suggestion) {
+        //       print(suggestion);
+        //     },
+        //     noItemsFoundBuilder: (BuildContext context) => Container(
+        //         color: Colors.black, child: Suggestion('No friends found!')),
+        //   ),
+        // ),
 
         Flexible(
           child: FractionallySizedBox(
@@ -95,7 +112,7 @@ class SearchBar extends StatelessWidget {
         ),
 
         FractionallySizedBox(
-          widthFactor: .8,
+          widthFactor: .95,
           child: TypeAheadField(
             textFieldConfiguration: TextFieldConfiguration(
               autofocus: true,
@@ -107,7 +124,7 @@ class SearchBar extends StatelessWidget {
                   labelStyle: TextStyle(color: Colors.white)),
             ),
             suggestionsCallback: (pattern) {
-              return getSuggestions(pattern, friends);
+              // return getSuggestions(pattern, friends);
             },
             itemBuilder: (context, suggestion) {
               return Container(

@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gone/widgets/fetch.dart';
 import 'package:gone/widgets/homepage.dart';
 import 'package:gone/widgets/loadingpage.dart';
 import 'package:gone/widgets/constants.dart' as Constants;
 
 
-void main() => runApp(MyApp());
+void main() => runApp(Gone());
 
 
-class MyApp extends StatelessWidget {
+class Gone extends StatelessWidget {
   // This widget is the root of your application.
 
   @override
@@ -19,37 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      // home: MyHomePage(title: 'Flutter Demo Home Page'),
-      // home: LoadingPage(),
-      // home: HomePage(null),
-      home: FutureBuilder<Map>(
-          future: fetchUserData(Constants.DUMMY_UID),
-          builder: (BuildContext context, AsyncSnapshot<Map> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return LoadingPage();
-                break;
-              case ConnectionState.done:
-                print('here! ${snapshot.data}');
-                return HomePage(snapshot.data);
-                break;
-              default:
-                return Text('oh no', style: TextStyle(color: Colors.red));
-                // TODO add error case
-                break;
-            }
-          }),
+
+      home: HomePage(),
     );
   }
 }
