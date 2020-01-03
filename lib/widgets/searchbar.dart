@@ -74,13 +74,16 @@ class _UserStatusState extends State<UserStatus> {
             },
             child: Row(
               children: <Widget>[
-                Text(_status,
+                SizedBox(
+                  width: 40,
+                ), // TODO make more relative
+                Text('"$_status"',
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 40)), // TODO make relative
                 SizedBox(
-                  width: 25,
+                  width: 15,
                 ), // TODO make relative
                 Icon(
                   Icons.edit,
@@ -91,7 +94,6 @@ class _UserStatusState extends State<UserStatus> {
         : InkWell(
             onFocusChange: (bool b) {
               if (!b && _editing) {
-                print(_status);
                 this.setState(() {
                   _editing = false;
                 });
@@ -106,7 +108,6 @@ class _UserStatusState extends State<UserStatus> {
                 });
               },
               onSubmitted: (String value) {
-                print('submitted');
                 Firestore.instance
                     .collection("users")
                     .document(Constants.DUMMY_UID)
@@ -199,7 +200,7 @@ class SearchBar extends StatelessWidget {
           widthFactor: .95,
           child: TypeAheadField(
             textFieldConfiguration: TextFieldConfiguration(
-              autofocus: true,
+              autofocus: false,
               style: TextStyle(color: Colors.white),
               decoration: InputDecoration(
                   enabledBorder: border,
@@ -218,13 +219,12 @@ class SearchBar extends StatelessWidget {
               return getSuggestions(pattern, users);
             },
             itemBuilder: (context, suggestion) {
-              print('ASDFASDFSADF');
               print(suggestion.runtimeType);
               return Container(
                   color: Colors.black, child: Suggestion(suggestion, false));
             },
             onSuggestionSelected: (suggestion) {
-              print(suggestion);
+              print('$suggestion selected');
             },
             noItemsFoundBuilder: (BuildContext context) => Container(
                 color: Colors.black,

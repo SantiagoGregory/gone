@@ -66,17 +66,17 @@ class _StatusState extends State<Status> {
     return Card(
         child: ListTile(
             leading: FlutterLogo(size: 30),
-            title: Text(widget.name,
-                style: TextStyle(color: Colors.white, fontSize: 25)),
-            // title: RichText(
-            //     text: TextSpan(
-            //         text: widget.name,
-            //         style: TextStyle(color: Colors.white, fontSize: 25),
-            //         children: <TextSpan>[
-            //       TextSpan(
-            //           text: widget.status,
-            //           style: TextStyle(color: Colors.grey, fontSize: 25)),
-            //     ])),
+            // title: Text(widget.name,
+            //     style: TextStyle(color: Colors.white, fontSize: 25)),
+            title: RichText(
+                text: TextSpan(
+                    text: widget.name, // TODO make relative
+                    style: TextStyle(color: Colors.white, fontSize: 25),
+                    children: <TextSpan>[
+                  TextSpan(
+                      text: '\n"${widget.status}"', // TODO make better
+                      style: TextStyle(color: Colors.grey, fontSize: 25, fontStyle: FontStyle.italic)),
+                ])),
             subtitle: Text(widget.uid, style: TextStyle(color: Colors.grey)),
             trailing: IconButton(
               icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
