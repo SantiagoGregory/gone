@@ -7,7 +7,6 @@ import 'constants.dart' as Constants;
 List<String> getSuggestions(pattern, list) {
   List<String> suggestions = [];
   for (final s in list) {
-    print('HERE $s');
     if (s != null && s.startsWith(pattern) && pattern != '') {
       suggestions.add(s);
     }
@@ -27,13 +26,14 @@ class StatusList extends StatelessWidget {
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return Text("Loading . . . ",
-                style: TextStyle(color: Colors.white));
+                style: TextStyle(color: Colors.white)); // TODO make better
           }
+          print(snapshot.data.documents[0].data["status"]);
           return ListView.separated(
             itemCount: snapshot.data.documents.length,
             itemBuilder: (context, index) {
               dynamic currentDocument = snapshot.data.documents[index];
-              // if (friendids.contains(currentDocument.documentID))
+              // if (friendids.contains(currentDocument.documentID)) // TODO fix
               return Status(currentDocument.data["name"],
                   currentDocument.data["status"], currentDocument.documentID);
             },
@@ -77,7 +77,7 @@ class _StatusState extends State<Status> {
                       text: '\n"${widget.status}"', // TODO make better
                       style: TextStyle(color: Colors.grey, fontSize: 25, fontStyle: FontStyle.italic)),
                 ])),
-            subtitle: Text(widget.uid, style: TextStyle(color: Colors.grey)),
+            subtitle: Text('@${widget.uid}', style: TextStyle(color: Colors.grey)),
             trailing: IconButton(
               icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
               iconSize: 30,

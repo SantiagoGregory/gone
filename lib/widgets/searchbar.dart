@@ -66,6 +66,7 @@ class _UserStatusState extends State<UserStatus> {
     }
     return !_editing
         ? InkWell(
+            splashColor: Colors.black,
             onTap: () {
               this.setState(() {
                 _editing = true;
@@ -92,6 +93,7 @@ class _UserStatusState extends State<UserStatus> {
               ],
             ))
         : InkWell(
+            splashColor: Colors.black,
             onFocusChange: (bool b) {
               if (!b && _editing) {
                 this.setState(() {
