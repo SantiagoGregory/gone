@@ -19,8 +19,7 @@ class Gone extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      // home: LoginPage(),
-      home: HomePage(null),
+      home: LoginPage(),
     );
   }
 }

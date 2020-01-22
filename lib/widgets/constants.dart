@@ -7,9 +7,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 const Color BG_COLOR = Colors.black;
 const Color COMPONENT_COLOR = Colors.white;
 const Color DESELECT_COLOR = Colors.grey;
-const DUMMY_NAME = "Santiago Lisa";
-const DUMMY_UID = "santiago.lisa";
+const DUMMY_UID = "walter.burns";
 const INPUT_FONT_SIZE = 30.0;
+
 
 // final GoogleSignIn _googleSignIn = GoogleSignIn();
 // final FirebaseAuth _auth = FirebaseAuth.instance;

@@ -2,32 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:gone/widgets/Suggestion.dart';
 import 'package:gone/widgets/statuses.dart';
 import 'constants.dart' as Constants;
 
-class Suggestion extends StatelessWidget {
-  const Suggestion(this.name, this.textOnly);
 
-  final String name;
-  final bool textOnly;
-
-  @override
-  Widget build(BuildContext context) {
-    TextStyle ts = TextStyle(color: Colors.white, fontSize: 20);
-    return Card(
-        shape: RoundedRectangleBorder(
-            side: new BorderSide(color: Colors.grey),
-            borderRadius: BorderRadius.circular(5.0)),
-        child: textOnly
-            ? ListTile(title: Text(name, style: ts))
-            : ListTile(
-                title: Text(name, style: ts),
-                leading: FlutterLogo(size: 35),
-                subtitle: Text('Status', style: TextStyle(color: Colors.grey)),
-              ),
-        color: Colors.black);
-  }
-}
 
 class UserStatus extends StatefulWidget {
   const UserStatus(this.status);
@@ -165,32 +144,6 @@ class SearchBar extends StatelessWidget {
             heightFactor: .2,
           ),
         ),
-        // FractionallySizedBox(
-        //   widthFactor: .8,
-        //   child: TypeAheadField(
-        //     textFieldConfiguration: TextFieldConfiguration(
-        //       autofocus: true,
-        //       style: TextStyle(color: Colors.white),
-        //       decoration: InputDecoration(
-        //           enabledBorder: border,
-        //           border: borderGrey,
-        //           labelText: 'Set a status',
-        //           labelStyle: TextStyle(color: Colors.white)),
-        //     ),
-        //     suggestionsCallback: (pattern) {
-        //       return null;
-        //     },
-        //     itemBuilder: (context, suggestion) {
-        //       return Container(
-        //           color: Colors.black, child: Suggestion(suggestion));
-        //     },
-        //     onSuggestionSelected: (suggestion) {
-        //       print(suggestion);
-        //     },
-        //     noItemsFoundBuilder: (BuildContext context) => Container(
-        //         color: Colors.black, child: Suggestion('No friends found!')),
-        //   ),
-        // ),
 
         Flexible(
           child: FractionallySizedBox(
