@@ -4,9 +4,7 @@ import 'package:gone/widgets/homepage.dart';
 import 'package:gone/widgets/loadingpage.dart';
 import 'package:gone/widgets/constants.dart' as Constants;
 
-
 void main() => runApp(Gone());
-
 
 class Gone extends StatelessWidget {
   // This widget is the root of your application.
@@ -18,13 +16,10 @@ class Gone extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-
       home: HomePage(),
     );
   }
 }
-
-
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);

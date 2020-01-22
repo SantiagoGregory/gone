@@ -75,9 +75,13 @@ class _StatusState extends State<Status> {
                     children: <TextSpan>[
                   TextSpan(
                       text: '\n"${widget.status}"', // TODO make better
-                      style: TextStyle(color: Colors.grey, fontSize: 25, fontStyle: FontStyle.italic)),
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 25,
+                          fontStyle: FontStyle.italic)),
                 ])),
-            subtitle: Text('@${widget.uid}', style: TextStyle(color: Colors.grey)),
+            subtitle:
+                Text('@${widget.uid}', style: TextStyle(color: Colors.grey)),
             trailing: IconButton(
               icon: Icon((_favorite) ? Icons.favorite : Icons.favorite_border),
               iconSize: 30,
