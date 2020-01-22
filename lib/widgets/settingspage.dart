@@ -13,6 +13,11 @@ class SettingsPage extends StatelessWidget {
             heightFactor: .5,
           ),
         ),
+        Text(Constants.DUMMY_UID,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 50)),
         NiceButton(
           width: MediaQuery.of(context).size.width * .65,
           elevation: 8.0,

@@ -126,7 +126,7 @@ class _UserStatusState extends State<UserStatus> {
                   border: borderGrey,
                   labelText: _status,
                   labelStyle: TextStyle(color: Colors.grey)),
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: Constants.INPUT_FONT_SIZE),
             ));
   }
 }
@@ -201,9 +201,10 @@ class SearchBar extends StatelessWidget {
         FractionallySizedBox(
           widthFactor: .95,
           child: TypeAheadField(
+            
             textFieldConfiguration: TextFieldConfiguration(
               autofocus: false,
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: Colors.white, fontSize: Constants.INPUT_FONT_SIZE),
               decoration: InputDecoration(
                   enabledBorder: border,
                   border: borderGrey,

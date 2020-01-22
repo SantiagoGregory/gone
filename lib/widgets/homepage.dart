@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,7 +11,9 @@ import 'package:gone/widgets/statuses.dart';
 import 'constants.dart' as Constants;
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key}) : super(key: key);
+  HomePage(this.user, {Key key}) : super(key: key);
+
+  final FirebaseUser user;
 
   @override
   _HomePageState createState() => _HomePageState();
